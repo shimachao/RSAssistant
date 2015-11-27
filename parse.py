@@ -30,7 +30,7 @@ def parse_out_gold_num(text):
 
     re_pattern = re.compile('金币\s*(\d{1,2})')
     r = re.search(pattern=re_pattern, string=says)
-    gold_num = r.group(1)
+    gold_num = int(r.group(1))
 
     return gold_num
 
