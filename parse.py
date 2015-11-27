@@ -34,9 +34,27 @@ def parse_out_gold_num(text):
 
     return gold_num
 
+
+def parse_out_signed_info(text):
+    """ 解析并判断text是否提到“已经签到过”
+    :return:bool，如果已签到过，返回True;否则,返回False
+    """
+    soup = BeautifulSoup(text, 'html5lib')
+    div_with_class_mn = soup.body.find('div', id='wp', class_='wp').\
+                        find('div', id='ct', class_='ct2 wp cl').\
+                        find('div', class_='mn')
+    h1_with_class_mt = div_with_class_mn.find('h1', class_='mt')
+    info = h1_with_class_mt.get_text()
+    if info.find('已经签到过') > 0:
+        return True
+    else:
+        return False
+
 if __name__ == '__main__':
     html = open('G:\Python\RSAssistant\sign.html', encoding='utf-8').read()
     r = parse_out_form_hash(html)
+    print(r)
+    r = parse_out_signed_info(html)
     print(r)
 
     xml = '''<?xml version="1.0" encoding="utf-8"?>
@@ -55,3 +73,8 @@ if __name__ == '__main__':
             ]]></root>'''
     n = parse_out_gold_num(xml)
     print('金币数为:', n)
+
+    html = open('G:\Python\RSAssistant\已经签到过.html', encoding='utf-8').read()
+    r = parse_out_signed_info(html)
+    print(r)
+
