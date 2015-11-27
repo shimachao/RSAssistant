@@ -71,6 +71,9 @@ class WebSession:
                    'Referer': 'http://rs.xidian.edu.cn/forum.php'}
         r = self.s.get(url=url, params=query_data, headers=headers)
 
+        if parse.parse_out_signed_info(r.text):
+            raise RepeatSignError(message='检测到已签到过了，一天之内不能签到多次')
+
         self.form_hash = parse.parse_out_form_hash(r.text)
 
     def sign(self):
