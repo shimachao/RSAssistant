@@ -21,7 +21,7 @@ class DB:
     def insert(self, gold):
 
         if gold == None or gold == 0:
-            return 
+            return
 
         sql = "insert into sign_records (date, time, gold) VALUES(date(), time('now', 'localtime'), %d)" % (gold)
         self.cursor.execute(sql)
