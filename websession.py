@@ -5,6 +5,23 @@ import requests
 from hashlib import md5
 import parse
 
+
+class RepeatSignError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return self.message
+
+
+class TimeoutError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return self.message
+
+
 class WebSession:
     """ 负责和rs网站的http交互
     """
@@ -75,12 +92,23 @@ class WebSession:
                    'Accept-Language': 'zh-CN,zh;q=0.8',
                    'Referer': 'http://rs.xidian.edu.cn/plugin.php?id=dsu_paulsign:sign',
                    'Proxy-Connection': 'keep-alive'}
-        self.s.post(url=url, data=body_data, params=query_data, headers=headers)
+        r = self.s.post(url=url, data=body_data, params=query_data, headers=headers)
+
+        self.gold_num = parse.parse_out_gold_num(r.text)
+
+    def get_gold_num(self):
+        return self.gold_num
+
+    def close(self):
+        if self.s:
+            self.s.close()
+            self.s = None
 
 
 
 if __name__ == '__main__':
     rs_web = WebSession(username='高手情结', password='531236305')
+
     rs_web.login()
     rs_web.turn_to_sign_page()
     rs_web.sign()
