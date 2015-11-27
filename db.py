@@ -18,9 +18,12 @@ class DB:
         r = self.cursor.fetchone()
         return r
 
-    def insert(self, time, gold):
+    def insert(self, gold):
 
-        sql = "insert into sign_records (date, time, gold) VALUES(date(), '%s', %d)" % (time, gold)
+        if gold == None or gold == 0:
+            return 
+
+        sql = "insert into sign_records (date, time, gold) VALUES(date(), time('now', 'localtime'), %d)" % (gold)
         self.cursor.execute(sql)
         self.conn.commit()
 
@@ -51,5 +54,7 @@ if __name__ == '__main__':
     r = db.select_today_record()
     print(r)
     print(type(r))
+    db.insert(8)
+
 
     db.close()
