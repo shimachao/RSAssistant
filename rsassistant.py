@@ -22,7 +22,8 @@ def sign():
         raise
     else:
         gold_num = rs_web.get_gold_num()
-        return  gold_num
+        return gold_num
+
 
 def have_signed_already():
     db = DB(database='sign_records.db')
@@ -30,6 +31,7 @@ def have_signed_already():
     db.close()
 
     return r != None
+
 
 def sleep_until_tomorrow_sign_time():
     now = arrow.now()
@@ -42,9 +44,10 @@ def is_sign_time_now():
     """ 判断当前时间是不是签到时间"""
     now = arrow.now()
     dt_start = now.replace(hour=7, minute=0, second=0)
-    dt_end = now.replace(hour=23, minute=59,second=0)
+    dt_end = now.replace(hour=23, minute=59, second=0)
 
     return dt_start < now < dt_end
+
 
 def sleep_until_today_sign_time():
     now = arrow.now()
@@ -53,7 +56,7 @@ def sleep_until_today_sign_time():
     sleep(seconds)
 
 
-if __name__ == '__main__':
+def sign_service():
     while True:
         if have_signed_already():
             sleep_until_tomorrow_sign_time()
@@ -72,3 +75,6 @@ if __name__ == '__main__':
             db.insert(gold=gold_num)
             db.close()
             sleep_until_tomorrow_sign_time()
+
+if __name__ == '__main__':
+    sign_service()
