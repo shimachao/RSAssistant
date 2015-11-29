@@ -24,7 +24,6 @@ class RSAssistantService(win32serviceutil.ServiceFramework):
 
     def SvcDoRun(self):
         t = threading.Thread(target=sign_service)
-        t.setDaemon(True)
         t.start()
 
         win32event.WaitForSingleObject(self.hWaitStop, win32event.INFINITE)
