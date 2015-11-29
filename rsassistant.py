@@ -36,7 +36,7 @@ def have_signed_already():
 def sleep_until_tomorrow_sign_time():
     now = arrow.now()
     tomorrow_sign_time = now.replace(days=1, hour=7, minute=1, second=0)
-    seconds = tomorrow_sign_time - now
+    seconds = (tomorrow_sign_time - now).total_seconds()
     sleep(seconds)
 
 
