@@ -10,6 +10,10 @@ from rsassistant import sign_service
 
 class RSAssistantService(win32serviceutil.ServiceFramework):
 
+    _svc_name_ = "RSsign"
+    _svc_display_name_ = "RS Sign Service"
+    _svc_description_ = "用来自动到rs签到"
+
     def __init__(self, args):
         super().__init__(args)
         self.hWaitStop = win32event.CreateEvent(None, 0, 0, None)
