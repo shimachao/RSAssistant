@@ -30,12 +30,12 @@ def have_signed_already():
     r = db.select_today_record()
     db.close()
 
-    return r != None
+    return r is not None
 
 
 def sleep_until_tomorrow_sign_time():
     now = arrow.now()
-    tomorrow_sign_time = now.replace(days=1, hour=7, minute=1,second=0)
+    tomorrow_sign_time = now.replace(days=1, hour=7, minute=1, second=0)
     seconds = tomorrow_sign_time - now
     sleep(seconds)
 
