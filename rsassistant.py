@@ -5,13 +5,14 @@ from db import DB
 from time import sleep
 import arrow
 import os, sys
+from config import config
 
 
 def sign():
     """ 签到
     """
     try:
-        rs_web = WebSession(username='高手情结', password='531236305')
+        rs_web = WebSession(username=config['user_name'], password=config['password'])
         rs_web.login()
         rs_web.turn_to_sign_page()
         rs_web.sign()
