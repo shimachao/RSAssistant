@@ -11,8 +11,8 @@ from rsassistant import sign_service
 class RSAssistantService(win32serviceutil.ServiceFramework):
 
     _svc_name_ = "RSsign"
-    _svc_display_name_ = "RS Sign Service"
-    _svc_description_ = "用来自动到rs签到"
+    _svc_display_name_ = "RS Sign"
+    _svc_description_ = "rs自动签到服务"
 
     def __init__(self, args):
         super().__init__(args)
