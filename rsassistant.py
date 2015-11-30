@@ -4,6 +4,7 @@ from websession import WebSession, TimeoutError, RepeatSignError
 from db import DB
 from time import sleep
 import arrow
+import os, sys
 
 
 def sign():
@@ -56,7 +57,16 @@ def sleep_until_today_sign_time():
     sleep(seconds)
 
 
+def set_work_dir():
+    """ 设置程序的工作目录，便于程序通过相对路径读取数据文件，数据文件和程序放在同一目录下
+    """
+    os.chdir(os.path.dirname(sys.argv[0]))
+
+
 def sign_service():
+    # 设置程序工作目录为当前程序所在目录
+    set_work_dir()
+
     while True:
         if have_signed_already():
             sleep_until_tomorrow_sign_time()
